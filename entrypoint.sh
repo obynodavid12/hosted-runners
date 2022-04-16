@@ -1,15 +1,15 @@
 #!/bin/bash
-registration_url="https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPOSITORY}/actions/runners/registration-token"
+registration_url="https://api.github.com/repos/obynodavid12/hosted-runners/actions/runners/registration-token"
 echo "Requesting registration URL at '${registration_url}'"
 
 payload=$(curl -sX POST -H "Authorization: token ${GITHUB_PERSONAL_TOKEN}" ${registration_url})
-export TOKEN=$(echo $payload | jq .token --raw-output)
+export RUNNER_TOKEN=$(echo $payload | jq .token --raw-output)
 
 
 ./config.sh \
-    --name $(HOSTNAME) \
+    --name $(hostname) \
     --token ${RUNNER_TOKEN}
-    --url https://github.com/${GITHUB_OWNER}/${GITHUB_REPOSITORY} \
+    --url https://github.com/obynodavid12/hosted-runners \
     --work "workDir" \
     --unattended \
     --replace
